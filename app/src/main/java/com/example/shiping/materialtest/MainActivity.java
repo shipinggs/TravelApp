@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.animation_enter_left,R.anim.animation_exit_right);
         setContentView(R.layout.activity_main);
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
@@ -64,14 +65,19 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.help) { /** IMPLEMENT HELP ACTIVITY **/
             startActivity(new Intent(this, HelpActivity.class));
+            overridePendingTransition(R.anim.animation_enter_right,R.anim.animation_exit_left);
         }
 
         if (id == R.id.weatherForecast) { /**IMPLEMENT WEATHER ACTIVITY **/
             startActivity(new Intent(this, WeatherActivity.class));
+            overridePendingTransition(R.anim.animation_enter_right, R.anim.animation_exit_left);
+
         }
 
         if (id == R.id.thingsToBring) { /**IMPLEMENT PACKING LIST ACTIVITY **/
             startActivity(new Intent(this, ThingsToBringActivity.class));
+            overridePendingTransition(R.anim.animation_enter_right, R.anim.animation_exit_left);
+
         }
 
         return super.onOptionsItemSelected(item);
