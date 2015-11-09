@@ -32,5 +32,19 @@
         <item>TAB 3</item>
     </string-array>
     <string name="title_activity_help">HelpActivity</string>
-    <string name="title_activity_things_to_bring">ThingsToBringActivity</string>
+    <string name="title_activity_to_bring">ToBringActivity</string>
+
+    <string name="open_weather_maps_app_id">c6ed92527c5caa1fff99ff5cebcd309f</string>
+    <string name="weather_sunny">&#xf00d;</string>
+    <string name="weather_clear_night">&#xf02e;</string>
+
+    <string name="weather_foggy">&#xf014;</string>
+    <string name="weather_cloudy">&#xf013;</string>
+    <string name="weather_rainy">&#xf019;</string>
+    <string name="weather_snowy">&#xf01b;</string>
+    <string name="weather_thunder">&#xf01e;</string>
+    <string name="weather_drizzle">&#xf01c;</string>
+
+    <string name="place_not_found">Sorry, no weather data found.</string>
+
 </resources>

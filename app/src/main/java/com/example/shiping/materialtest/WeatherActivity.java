@@ -4,7 +4,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class WeatherActivity extends AppCompatActivity {
@@ -17,9 +16,16 @@ public class WeatherActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_weather);
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.weatherContainer, new WeatherFragment())
+                    .commit();
+        }
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("Weather");
         setSupportActionBar(toolbar);
+
 
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -27,12 +33,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_weather, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.thingsToBring) { /**IMPLEMENT PACKING LIST ACTIVITY **/
-            startActivity(new Intent(this, ThingsToBringActivity.class));
+            startActivity(new Intent(this, ToBringActivity.class));
             overridePendingTransition(R.anim.animation_enter_right, R.anim.animation_exit_left);
 
         }
@@ -95,8 +95,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            MyFragment myFragment = MyFragment.getInstance(position);
-            return myFragment;
+            //dummy fragment
+            Fragment fragment = null;
+
+            if (position == 0)
+                fragment = new TestFragment();
+            else if (position == 1)
+                fragment = new MyFragment();
+            else if (position == 2)
+                fragment = new TestFragment();
+
+            return fragment;
         }
 
         @Override
@@ -106,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             drawable.setBounds(0,0,60,60);
             ImageSpan imageSpan = new ImageSpan(drawable);
             SpannableString spannableString = new SpannableString(" ");
-            spannableString.setSpan(imageSpan,0,spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(imageSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             return spannableString;
         }
@@ -114,31 +123,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 3;
-        }
-    }
-
-    public static class MyFragment extends Fragment {
-
-        private TextView textView;
-
-        public static MyFragment getInstance(int position) {
-            MyFragment myFragment = new MyFragment();
-            Bundle args = new Bundle();
-            args.putInt("position", position);
-            myFragment.setArguments(args);
-            return myFragment;
-        }
-
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View layout = inflater.inflate(R.layout.fragment_my, container, false);
-            textView = (TextView) layout.findViewById(R.id.position);
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                textView.setText("The Page Selected Is " + bundle.getInt("position"));
-            }
-            return layout;
         }
     }
 
