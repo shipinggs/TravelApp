@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/singapore_nightview"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".MainActivity"
+    android:baselineAligned="false">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#454545"
+        android:textColor="#AAAAAA"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/get_to_know_attractions"
+        android:id="@+id/getToKnow"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ListView
+        android:paddingTop="10dp"
+        android:id="@+id/location_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

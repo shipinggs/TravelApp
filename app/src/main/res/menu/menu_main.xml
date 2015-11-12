@@ -7,7 +7,7 @@
         android:id="@+id/help"
         android:orderInCategory="300"
         android:title="@string/help"
-        android:icon="@drawable/ic_help"
+        android:icon="@drawable/ic_info"
         app:showAsAction="ifRoom" />
 
     <item

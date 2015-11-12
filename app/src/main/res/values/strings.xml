@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">MaterialTest</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">TravelSG</string>
+    <string name="title_activity_main">TravelSG</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -46,5 +46,9 @@
     <string name="weather_drizzle">&#xf01c;</string>
 
     <string name="place_not_found">Sorry, no weather data found.</string>
+    <string name="get_to_know_attractions">Get to know your attractions</string>
+    <string name="title_activity_google_play_services">GooglePlayServicesActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="map_view">Map View</string>
 
 </resources>
