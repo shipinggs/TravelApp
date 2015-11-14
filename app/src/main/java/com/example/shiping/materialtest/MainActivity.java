@@ -2,12 +2,12 @@ package com.example.shiping.materialtest;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void FindRouteActivate(View view) {
         try {
-            ListOfSelectedPlacesAndModes.rememberBoole = 1 - ListOfSelectedPlacesAndModes.rememberBoole;
+            ListOfSelectedPlacesAndModes.rememberBoole += 1;
             EditText budgetIn = (EditText) findViewById(R.id.budgetText);
 
             double budget = Double.parseDouble(budgetIn.getText().toString());

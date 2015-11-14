@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by Admin on 10/31/2015.
+ * Helper class for the SQLite database that handle creating and upgrading the data table.
  */
 public class ItemDBHelper extends SQLiteOpenHelper {
     public ItemDBHelper(Context context) {

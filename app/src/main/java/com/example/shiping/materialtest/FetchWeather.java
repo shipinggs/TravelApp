@@ -11,11 +11,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Admin on 11/7/2015.
+ * Class used to fetch weather forecast information from OpenWeatherMap.org through an API call.
+ * Weather information is returned in the form of a JSON object.
  */
 public class FetchWeather {
     private static final String OPEN_WEATHER_MAP_API =
             "http://api.openweathermap.org/data/2.5/forecast?q=Singapore&appid=2de143494c0b295cca9337e1e96b00e0";
+
 
     public static JSONObject getJSON(Context context){
         try {
@@ -36,7 +38,6 @@ public class FetchWeather {
             reader.close();
 
             JSONObject data = new JSONObject(json.toString());
-            Log.e("Json checkpoint", data.toString());
 
             // This value will be 404 if the request was not
             // successful

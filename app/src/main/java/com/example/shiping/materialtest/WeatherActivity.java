@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+/**
+ * Activity containing one fragment that display the weather forecast
+ */
+
 public class WeatherActivity extends AppCompatActivity {
 
     private Toolbar toolbar;

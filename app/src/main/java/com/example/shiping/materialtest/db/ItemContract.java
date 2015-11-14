@@ -3,7 +3,8 @@ package com.example.shiping.materialtest.db;
 import android.provider.BaseColumns;
 
 /**
- * Created by Admin on 10/31/2015.
+ * Contract class for database that defines essential fields: database name, database version,
+ * table name, and columns' names.
  */
 public class ItemContract {
     public static final String DB_NAME = "com.example.shiping.materialtest.db";

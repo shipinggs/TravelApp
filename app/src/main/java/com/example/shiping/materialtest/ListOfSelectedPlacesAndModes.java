@@ -13,8 +13,8 @@ public class ListOfSelectedPlacesAndModes extends Application {
     public static String totalCost;
     public static String totalTime;
 
-    public static int rememberBoole;
-    public static int compareBoole;
+    public static int rememberBoole = 0;
+    public static int compareBoole = 0;
 
     public static String getTotalCost() {
         return totalCost;

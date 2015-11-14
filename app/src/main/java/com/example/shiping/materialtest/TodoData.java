@@ -3,11 +3,20 @@ package com.example.shiping.materialtest;
 import java.util.HashMap;
 
 /**
- * Created by Admin on 11/6/2015.
+ * Data class containing URL to different locations of interest and
+ * a to-bring list for each location.
+ * Data is in the form of HashMap, with the key being the location and the value being
+ * the URL or the String array containing items to bring
  */
+
+
 public class TodoData {
     public HashMap<String, String> toDoList = new HashMap<>();
     public HashMap<String, String[]> toBringList = new HashMap<>();
+
+    /**
+     * Constructor takes no argument, and pairs data with location keys
+     */
 
     public TodoData() {
         toDoList.put("Marina Bay Sands", "http://www.yoursingapore.com/see-do-singapore/recreation-leisure/resorts/marina-bay-sands.html");

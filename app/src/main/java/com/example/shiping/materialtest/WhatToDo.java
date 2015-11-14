@@ -7,6 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+/**
+ * Activity that display a Webview showing the relevant information about a tourist attraction,
+ * which is passes into this activity as an Extra in the Intent when the activity is launched
+ */
+
 public class WhatToDo extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -22,9 +27,13 @@ public class WhatToDo extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle(location);
         setSupportActionBar(toolbar);
-
-
     }
+
+    /**
+     * Open a URL stored in TodoData corresponding to the location of attraction.
+     * Enable JavaScript to display dynamic contents.
+     * @param location tourist attraction to be shown on the Webview
+     */
 
     private void initiate(String location) {
         WebView myWebView = (WebView) findViewById(R.id.webView);
