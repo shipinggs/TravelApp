@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.StrictMode;
@@ -89,22 +88,25 @@ public class MapFragment extends android.support.v4.app.Fragment {
 
     }
 
+    /**
+     * called when the search button is pressed in the google map fragment.
+     * if the location entered in the EditText can be identified in the dict.txt,
+     * the location is zoomed into and marked in the google map.
+     * Hides the soft keyboard before the method is completed
+     * @param view view of the current activity
+     */
     public void search(View view) {
         GoogleMap mMap = mapFragment.getMap();
-
 
         //get location from search bar
         EditText location = (EditText) getActivity().findViewById(R.id.searchInput);
         String locstring = location.getText().toString().toLowerCase(); //location in lowercase
         String fuzzylocation = fuzzify(locstring);
         if (!fuzzylocation.equals("")) {
-            //clear map first
-            mMap.clear();
-
+            mMap.clear(); //clear map first
             LatLng loc = getCoordinate(fuzzylocation);
             mMap.addMarker(new MarkerOptions().position(loc).title(fuzzylocation).anchor(0.5f,0.5f));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17f));
-
         }
         else {
             //location is not a location listed in dict
@@ -152,6 +154,12 @@ public class MapFragment extends android.support.v4.app.Fragment {
         return "";
     }
 
+    /**
+     * returns the editDistance value of two strings
+     * @param s1
+     * @param s2
+     * @return
+     */
     private int compare(String s1, String s2) { //s1 is input, s2 is loc name in dictionary
         //initial conditions
         int ls1 = s1.length();
@@ -163,8 +171,6 @@ public class MapFragment extends android.support.v4.app.Fragment {
         for (int j=0; j <= ls2; j++) {
             distancematrix[0][j] = j;
         }
-        /////////////////////////////////////////////////
-
 
         for (int i = 1; i <=ls1; i++) {
             for (int j = 1; j <=ls2; j++) {
@@ -209,13 +215,20 @@ public class MapFragment extends android.support.v4.app.Fragment {
         return loc;
     }
 
+    /**
+     * called when the direction button is pressed in the google map fragment.
+     * displays the optimum itinerary found in function 1 in the google map.
+     * starting from MBS, the subsequent locations are directed with arrows and colour-coded
+     * depending on the modes of transport for each location.
+     * MBS is marked with a blue marker to indicate the starting point.
+     * @param view view of the activity
+     */
     public void pathFind(View view) {
 
         GoogleMap mMap = mapFragment.getMap();
 
         locations = ListOfSelectedPlacesAndModes.interestedLocations;
         mode = ListOfSelectedPlacesAndModes.modeOfTransport;
-
 
         if (locations.length == 0) {
             Toast.makeText(getActivity(), "You have no itinerary yet", Toast.LENGTH_SHORT).show();
@@ -261,6 +274,13 @@ public class MapFragment extends android.support.v4.app.Fragment {
 
     }
 
+    /**
+     * adds an arrow head to the tip of the polyline indicated by the two endpoints of the polyline
+     * passed as arguments
+     * @param mMap googleMap instance
+     * @param from location A
+     * @param to location B
+     */
     private void drawArrowHead(GoogleMap mMap, LatLng from, LatLng to){
         // obtain the bearing between the last two points
         double bearing = getBearing(from, to);
@@ -366,6 +386,13 @@ public class MapFragment extends android.support.v4.app.Fragment {
         }
     }
 
+    /**
+     * obtains the bearing from location A to location B to determine which direction the arrow points
+     * to in drawArrowHead
+     * @param from, location A
+     * @param to, location B
+     * @return bearing from A to B
+     */
     private double getBearing(LatLng from, LatLng to){
         double degreesPerRadian = 180.0 / Math.PI;
         double lat1 = from.latitude * Math.PI / 180.0;
@@ -384,6 +411,5 @@ public class MapFragment extends android.support.v4.app.Fragment {
 
         return angle;
     }
-
 
 }
