@@ -15,6 +15,13 @@ import android.widget.CheckBox;
 
 import java.util.ArrayList;
 
+/**
+ * Custom Adapter class for the packing list ListView.
+ * This Custom Adapter takes data as an ArrayList of String[] where each String array is in the
+ * format [(item to bring), (is_checked status)]. For example, {"water bottle", "Y"} means the item
+ * to bring is water bottle, and the user has already checked this item off.
+ */
+
 public class PackingListAdapter extends ArrayAdapter<ArrayList<String[]>> {
     ArrayList<String[]> modelItems = null;
     Context context;
@@ -22,14 +29,19 @@ public class PackingListAdapter extends ArrayAdapter<ArrayList<String[]>> {
     public PackingListAdapter(Context context, ArrayList<String[]> resource) {
         super(context, R.layout.item_view, (ArrayList) resource);
 
-        // TODO Auto-generated constructor stub
         this.context = context;
         this.modelItems = resource;
     }
 
+    /**
+     * Populate the ListView by showing the item and the checkbox' checked status accordingly.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         convertView = inflater.inflate(R.layout.item_view, parent, false);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.itemCheckBox);

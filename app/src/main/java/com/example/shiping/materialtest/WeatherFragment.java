@@ -16,10 +16,14 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The fragment for displaying weather forecast for the next day in Singapore
+ * Weather information includes weather description, temperature, wind speed, humidity and pressure
+ */
+
 
 public class WeatherFragment extends android.support.v4.app.Fragment {
     Typeface weatherFont;
-
     TextView cityField;
     TextView updatedField;
     TextView detailsField;
@@ -31,6 +35,12 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
     public WeatherFragment(){
         handler = new Handler();
     }
+
+    /**
+     * weather.ttf is a font containing different weather icons.
+     * onCreate method also calls the updateWeatherData() method, which does an API call to fetch
+     * weather data from OpenWeatherMap.org
+     */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,14 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
         return rootView;
     }
 
+    /**
+     * Call the FetchWeather.getJASON() method which returns a JSON object containing weather
+     * forecast information and save it in a JSONObject called json
+     * Check that this JSON object is not null (a toast message is displayed if it is), and
+     * then call a method renderWeather() to process this JSON object, extracting out the
+     * relevant weather information.
+     */
+
     private void updateWeatherData(){
         new Thread(){
             public void run(){
@@ -76,6 +94,15 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
             }
         }.start();
     }
+
+    /**
+     * Given a JSON, extract out relevant information like City name, country, weather description,
+     * humidity, pressure, temperature, etc. and display the information on the views on the UI.
+     * Also extract sunrise and sunset time to display icons accordingly. If the current time is
+     * after sunrise, before sunset, then the sun icons are used. Otherwise, moon icons are used,
+     * where relevant.
+     * @param json the JSONObject fetched from OpenWeatherMap.org API call
+     */
 
     private void renderWeather(JSONObject json){
         try {
@@ -106,6 +133,14 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
             Log.e("SimpleWeather", "One or more fields not found in the JSON data");
         }
     }
+
+    /**
+     * method to display the weather icon
+     * @param actualId ID of the weather condition. Each weather condition is given a unique ID.
+     *                 We use this ID to display the correct weather icon.
+     * @param sunrise sunrise time
+     * @param sunset sunset time
+     */
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset){
         int id = actualId / 100;
