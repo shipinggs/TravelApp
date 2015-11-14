@@ -47,7 +47,7 @@ import java.util.List;
  */
 public class MapFragment extends android.support.v4.app.Fragment {
 
-    private CustomMapFragment mapFragment = new CustomMapFragment();
+    private CustomMapFragment mapFragment = new CustomMapFragment(); // Creates new instance of CustomMapFragment i.e. Google Maps
 
     private String locations[];
     private String mode[];
@@ -104,6 +104,7 @@ public class MapFragment extends android.support.v4.app.Fragment {
         String fuzzylocation = fuzzify(locstring);
         if (!fuzzylocation.equals("")) {
             mMap.clear(); //clear map first
+            fuzzylocation = "Singapore" + fuzzylocation; // To ensure location found is a S'pore one.
             LatLng loc = getCoordinate(fuzzylocation);
             mMap.addMarker(new MarkerOptions().position(loc).title(fuzzylocation).anchor(0.5f,0.5f));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17f));

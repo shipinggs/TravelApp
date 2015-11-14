@@ -2,9 +2,12 @@ package com.example.shiping.materialtest;
 
 import android.app.Application;
 
-/**
- * Created by Admin on 11/6/2015.
- */
+
+/** This is the global variables class. It stores the 2 important String[]s from the Traveling Salesman
+ * Problem algorithms from Function 1. It is static so that the other functions can reference them
+ * without having to create an instance of them. **/
+
+
 public class ListOfSelectedPlacesAndModes extends Application {
 
     public static String[] interestedLocations = new String[] {};

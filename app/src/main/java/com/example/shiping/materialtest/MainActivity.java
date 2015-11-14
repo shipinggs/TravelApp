@@ -119,16 +119,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /** Defines **/
+    /** Defines MyPagerAdapter which extends FragmentStatePagerAdapter. This class chooses the right fragment
+     * to display on the screen. FragmentStatePagerAdapter remembers the previous state of the fragment
+     * after it has been created already. This is in contrast to FragmentPagerAdapter which destroys the
+     * fragments after they have been swiped away. **/
+
     class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        int icons[] = {R.drawable.ic_directions, R.drawable.ic_place, R.drawable.ic_favorite};
+        int icons[] = {R.drawable.ic_directions, R.drawable.ic_place, R.drawable.ic_favorite}; // Icons for display on tabs
         String[] tabText = getResources().getStringArray(R.array.tabs);
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
             tabText = getResources().getStringArray(R.array.tabs);
         }
+
+        /** Chooses the fragment to display.
+         * This method getItem is called within the FragmentStatePagerAdapter class. **/
 
         @Override
         public Fragment getItem(int position) {
@@ -145,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
             return fragment;
         }
 
+        /** This method getPageTitle sets the icons for displaying on the tabs.
+         *  Since a CharSequence must be returned, a SpannableString is used to store the images. **/
         @Override
         public CharSequence getPageTitle(int position) {
 
@@ -157,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             return spannableString;
         }
 
+        /** This should return the number of tabs you have. **/
         @Override
         public int getCount() {
             return 3;

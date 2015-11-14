@@ -1,17 +1,6 @@
 package com.example.shiping.materialtest;
 
-
-import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,8 +8,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment extends SupportMapFragment. This is where the map is "generated".
  */
+
 public class CustomMapFragment extends com.google.android.gms.maps.SupportMapFragment {
 
     public CustomMapFragment() {
@@ -35,6 +25,8 @@ public class CustomMapFragment extends com.google.android.gms.maps.SupportMapFra
         super.onActivityCreated(savedInstanceState);
 
         GoogleMap mMap = getMap();
+
+        // Initiates starting position to be MBS
         mMap.addMarker(new MarkerOptions().position(SINGAPORE).title("Marina Bay Sands"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SINGAPORE, 15));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);

@@ -22,8 +22,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.LinearLayout;
+
+/** This is an open source code. **/
 
 class SlidingTabStrip extends LinearLayout {
 

@@ -1,7 +1,6 @@
 package com.example.shiping.materialtest;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment houses function 1. Most of the coding work is done at the xml side.
  */
 public class CalcFragment extends android.support.v4.app.Fragment {
 

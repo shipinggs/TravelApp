@@ -1,8 +1,7 @@
 package com.example.shiping.materialtest;
 
-/**
- * Created by Anhnonymouz on 13/11/2015.
- */
+
+
 public class RouteTransport {
     public  String route;
     public  String transport;

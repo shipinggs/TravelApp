@@ -1,10 +1,9 @@
 package com.example.shiping.materialtest.db;
 
-/**
- * Created by Anhnonymouz on 12/11/2015.
- */
+
 import java.util.HashMap;
 
+/** This class houses all the Traveling Distance and Cost Data between the 9 chosen locations. **/
 
 public class MapData {
 
@@ -12,7 +11,19 @@ public class MapData {
     public static HashMap<String, double[]> createData() {
         HashMap<String, double[]> data = new HashMap<String, double[]> ();
 
-        // e.g. from A to B = {publicCost, publicTime, taxiCost, taxiTime, walkCost, walkTime}
+        /**
+         * FOR REFERENCE:
+         * A --> Marina Bay Sands
+         * B --> Singapore Flyer
+         * C --> Vivo City
+         * D --> Resorts World Sentosa
+         * E --> Buddha Tooth Relic Temple
+         * F --> Singapore Zoo/ Zoo
+         * G --> Singapore Botanic Gardens/ Botanic Gardens
+         * H --> Peranakan Museum
+         * I --> ION Orchard
+         * e.g. from A to B = {publicCost, publicTime, taxiCost, taxiTime, walkCost, walkTime} **/
+
         double[] listAB = {0.83, 17, 3.22, 3, 0, 14};
         double[] listAC = {1.18, 26, 6.96, 14, 0, 69};
         double[] listAD = {4.03, 35, 8.50, 19, 0, 76};
@@ -95,6 +106,8 @@ public class MapData {
         double[] listIG = {0.98, 40, 8.68, 8, 0, 42};
         double[] listIH = {0.82, 19, 8.95, 9, 0, 34};
 
+
+        // Short-form keyword used here for neater coding.
 
         data.put("ab", listAB);
         data.put("ac", listAC);
