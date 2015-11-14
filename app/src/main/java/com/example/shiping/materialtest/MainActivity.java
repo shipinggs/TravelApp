@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,19 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String LOCATION = "location";
 
-    public static FragmentManager fragmentManager;
-
-    private CustomMapFragment customMapFragment = new CustomMapFragment();
-
-
+    /** When MainActivity is created, it sets up the toolbar (which holds the itinerary, packing list,
+     *  and weather icons). It then reconciles the getSupportFragmentManager and the ViewPager mPager.
+     *  This is essentially the backbone of the swiping and fragmentation interface. The use of mTabs,
+     *  of class SlidingTabLayout, allows for the visual recognition of which fragment is currently on
+     *  display. **/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.animation_enter_left, R.anim.animation_exit_right);
         setContentView(R.layout.activity_main);
-
-        fragmentManager = getSupportFragmentManager();
 
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
@@ -71,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    /** onOptionsItemSelected is called when an item in the Toolbar is clicked. There are three main
+     *  icons in the Toolbar here, all of which start a new activity when clicked. The transition
+     *  animation is amended to enter from the sides instead of from the default bottom, as this
+     *  gives a smoother transition between activities. **/
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.itinerary) { /** IMPLEMENT HELP ACTIVITY **/
+        if (id == R.id.itinerary) {                                 //   IMPLEMENT HELP ACTIVITY
             if (ListOfSelectedPlacesAndModes.interestedLocations.length == 0)
                 Toast.makeText(this, "You have no itinerary yet", Toast.LENGTH_SHORT).show();
             else {
@@ -92,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (id == R.id.weatherForecast) { /**IMPLEMENT WEATHER ACTIVITY **/
+        if (id == R.id.weatherForecast) {                           //   IMPLEMENT WEATHER ACTIVITY
             startActivity(new Intent(this, WeatherActivity.class));
             overridePendingTransition(R.anim.animation_enter_right, R.anim.animation_exit_left);
 
         }
 
-        if (id == R.id.thingsToBring) { /**IMPLEMENT PACKING LIST ACTIVITY **/
+        if (id == R.id.thingsToBring) {                             //  IMPLEMENT PACKING LIST ACTIVITY
             startActivity(new Intent(this, ToBringActivity.class));
             overridePendingTransition(R.anim.animation_enter_right, R.anim.animation_exit_left);
 
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onLocationClick(View v) { /** FOR STARTING WEBVIEW INTENT **/
+    public void onLocationClick(View v) {                           //    FOR STARTING WEBVIEW INTENT
         String location = ((Button) v).getText().toString();
         Intent detailIntent = new Intent(this, WhatToDo.class);
         detailIntent.putExtra(LOCATION, location);
@@ -115,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    /** Defines **/
     class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         int icons[] = {R.drawable.ic_directions, R.drawable.ic_place, R.drawable.ic_favorite};
