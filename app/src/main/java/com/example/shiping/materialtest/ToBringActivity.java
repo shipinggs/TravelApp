@@ -15,11 +15,14 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.shiping.materialtest.db.ItemContract;
 import com.example.shiping.materialtest.db.ItemDBHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class ToBringActivity extends AppCompatActivity {
@@ -40,12 +43,12 @@ public class ToBringActivity extends AppCompatActivity {
         toolbar.setTitle("Packing List");
         setSupportActionBar(toolbar);
 
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         //TODO: call initiateItemList() only when there is a change in locations
-        initiateItemList();
+
+        if (ListOfSelectedPlacesAndModes.rememberBoole != ListOfSelectedPlacesAndModes.compareBoole) {
+            initiateItemList();
+            ListOfSelectedPlacesAndModes.compareBoole = ListOfSelectedPlacesAndModes.rememberBoole;
+        }
         updateUI();
     }
 
@@ -61,15 +64,19 @@ public class ToBringActivity extends AppCompatActivity {
         SQLiteDatabase sqlDB = helper.getWritableDatabase();
         sqlDB.delete(ItemContract.TABLE, null, null);
 
+
+
         for (Map.Entry<String, String[]> entry : (new TodoData()).toBringList.entrySet()) {
             for (String item : entry.getValue()) {
-                ContentValues values = new ContentValues();
-                values.clear();
-                values.put(ItemContract.Columns.ITEM, item);
-                values.put(ItemContract.Columns.CHECKED, "N");
+                if (Arrays.asList(ListOfSelectedPlacesAndModes.interestedLocations).contains(entry.getKey())) {
+                    ContentValues values = new ContentValues();
+                    values.clear();
+                    values.put(ItemContract.Columns.ITEM, item);
+                    values.put(ItemContract.Columns.CHECKED, "N");
 
-                sqlDB.insertWithOnConflict(ItemContract.TABLE, null, values,
-                        SQLiteDatabase.CONFLICT_REPLACE);
+                    sqlDB.insertWithOnConflict(ItemContract.TABLE, null, values,
+                            SQLiteDatabase.CONFLICT_REPLACE);
+                }
             }
         }
     }

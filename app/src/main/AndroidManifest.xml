@@ -35,13 +35,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".HelpActivity"
-            android:label="@string/title_activity_help" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
             android:name=".ToBringActivity"
             android:label="@string/title_activity_to_bring" >
             <meta-data
@@ -49,6 +42,13 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".WhatToDo" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".RouteFinder"
+            android:label="@string/title_activity_route_finder">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

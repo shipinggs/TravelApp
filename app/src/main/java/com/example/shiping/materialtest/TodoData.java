@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by Admin on 11/6/2015.
  */
 public class TodoData {
-    public HashMap<String, String> toDoList = new HashMap<>(20);
+    public HashMap<String, String> toDoList = new HashMap<>();
     public HashMap<String, String[]> toBringList = new HashMap<>();
 
     public TodoData() {
@@ -22,10 +22,7 @@ public class TodoData {
 
 
 
-        toBringList.put("Marina Bay Sands", new String[]{"Swimwear",
-                "Extra cash/credit cards as things are relatively pricey",
-                "Formal Wear and Passport to enter Casino in MBS",
-                "Medication"});
+        toBringList.put("Marina Bay Sands", new String[]{});
         toBringList.put("Singapore Flyer", new String[] {"Lots of water as Singapore has humid weather!",
                 "Shorts and light coloured t-shirts due to Humid weather",
                 "Camera to retain your precious moments",
@@ -86,7 +83,6 @@ public class TodoData {
                 "Medication"});
         toBringList.put("ION Orchard", new String[] {"Lots of water as Singapore has humid weather!",
                 "Extra cash/credit cards as things are relatively pricey",
-                "Camera to retain your precious moments",
                 "Power Bank as you will be travelling!",
                 "Shorts and light coloured t-shirts due to Humid weather",
                 "Deodorant/Face cloth(Freshen up)",

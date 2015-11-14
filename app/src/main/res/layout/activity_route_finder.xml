@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/routefinder"
+    android:orientation="vertical"
+    tools:context="com.example.shiping.materialtest.RouteFinder"
+    >
+
+
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/cost"
+            android:layout_weight="3"
+            android:gravity="left"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/time"
+            android:layout_weight="3"
+            android:gravity="left"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="From Marina Bay Sands Hotel: "
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+
+        />
+    <!--<android.support.v7.widget.CardView-->
+        <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/card_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0.03"-->
+        <!--android:background="#FFFFFF"-->
+        <!--card_view:cardUseCompatPadding="true"-->
+        <!--card_view:cardElevation="2dp"-->
+        <!-->-->
+
+        <!--Content -->
+        <!--<include-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--layout="@layout/route"-->
+            <!--android:id="@+id/cardroute"/>-->
+
+
+    <!--</android.support.v7.widget.CardView>-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_view"
+        >
+    </ListView>
+
+
+
+
+
+
+
+</LinearLayout>

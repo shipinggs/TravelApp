@@ -9,14 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Arrays;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavouritesFragment extends android.support.v4.app.Fragment {
 
-    ListOfSelectedPlaces listOfSelectedPlaces = new ListOfSelectedPlaces();
     ListView locationListView;
+    String[] getLocations = ListOfSelectedPlacesAndModes.interestedLocations;
 
 
     public FavouritesFragment() {
@@ -35,11 +37,22 @@ public class FavouritesFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.location_view,
-                R.id.location_button,
-                (listOfSelectedPlaces.getInterestedLocations()));
-        locationListView = (ListView) getActivity().findViewById(R.id.location_list);
-        locationListView.setAdapter(locationAdapter);
+
+        if (getLocations.length == 0) {
+            ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(getActivity(),
+                    R.layout.location_view,
+                    R.id.location_button, getLocations);
+            locationListView = (ListView) getActivity().findViewById(R.id.location_list);
+            locationListView.setAdapter(locationAdapter);
+        } else {
+            String[] locations = Arrays.copyOf(getLocations, getLocations.length - 1);
+            ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(getActivity(),
+                    R.layout.location_view,
+                    R.id.location_button, locations);
+            locationListView = (ListView) getActivity().findViewById(R.id.location_list);
+            locationListView.setAdapter(locationAdapter);
+        }
+
     }
 }
+

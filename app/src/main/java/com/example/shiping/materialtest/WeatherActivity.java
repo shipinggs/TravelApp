@@ -26,11 +26,6 @@ public class WeatherActivity extends AppCompatActivity {
         toolbar.setTitle("Weather");
         setSupportActionBar(toolbar);
 
-
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
 

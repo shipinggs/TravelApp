@@ -3,8 +3,10 @@ package com.example.shiping.materialtest;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,12 +17,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +41,10 @@ public class MapFragment extends android.support.v4.app.Fragment {
 
     private CustomMapFragment mapFragment = new CustomMapFragment();
 
+    private String locations[];
+    private String mode[];
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
@@ -44,15 +52,21 @@ public class MapFragment extends android.support.v4.app.Fragment {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.map_container, mapFragment).commit();
 
+        Button searchButton = (Button) rootView.findViewById(R.id.searchBtn);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search(v);
+            }
+        });
 
-
-        Button button = (Button) rootView.findViewById(R.id.searchbt);
-        button.setOnClickListener(new View.OnClickListener()
+        ImageButton pathButton = (ImageButton) rootView.findViewById(R.id.pathFindBtn);
+        pathButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                search(v);
+                pathFind(v);
             }
         });
 
@@ -69,12 +83,14 @@ public class MapFragment extends android.support.v4.app.Fragment {
     public void search(View view) {
         GoogleMap mMap = mapFragment.getMap();
 
+
         //get location from search bar
         EditText location = (EditText) getActivity().findViewById(R.id.searchInput);
         String locstring = location.getText().toString().toLowerCase(); //location in lowercase
         String fuzzylocation = fuzzify(locstring);
         if (!fuzzylocation.equals("")) {
-            Log.i("MapsActivity.java", fuzzylocation + " in if block");
+            //clear map first
+            mMap.clear();
 
             LatLng loc = getCoordinate(fuzzylocation);
             mMap.addMarker(new MarkerOptions().position(loc).title(fuzzylocation).anchor(0.5f,0.5f));
@@ -83,10 +99,14 @@ public class MapFragment extends android.support.v4.app.Fragment {
         }
         else {
             //location is not a location listed in dict
-            Log.i("MapsActivity.java", fuzzylocation+" in else block");
             Toast.makeText(getActivity(), "Unfound location", Toast.LENGTH_SHORT).show();
         }
 
+        //hide soft keyboard
+        hideSoftKeyboard();
+    }
+
+    private void hideSoftKeyboard() {
         //hide soft keyboard
         InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(
@@ -153,10 +173,16 @@ public class MapFragment extends android.support.v4.app.Fragment {
         return distancematrix[ls1][ls2];
     }
 
+    /**
+     * gets LatLng value from a string input using Geocoder
+     * @param location
+     * @return LatLng of the string location
+     */
     private LatLng getCoordinate(String location) {
         Geocoder myGeo = new Geocoder(getActivity());
-        List<Address> matchedList= null;
+        List<Address> matchedList = null;
         Address address = null;
+        LatLng loc = null;
         try {
             matchedList = myGeo.getFromLocationName(location, 1);
             address = matchedList.get(0);
@@ -164,13 +190,65 @@ public class MapFragment extends android.support.v4.app.Fragment {
             //geocoder cannot find the location
             Toast.makeText(getActivity(), "Invalid location" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        try {
+            loc = new LatLng(address.getLatitude(), address.getLongitude());
 
-        LatLng loc = new LatLng(address.getLatitude(), address.getLongitude());
+        } catch (NullPointerException e) {
+            Toast.makeText(getActivity(), "A problem occurred in retrieving location", Toast.LENGTH_SHORT).show();
+
+        }
         return loc;
     }
 
+    public void pathFind(View view) {
+
+        GoogleMap mMap = mapFragment.getMap();
+
+        locations = ListOfSelectedPlacesAndModes.interestedLocations;
+        mode = ListOfSelectedPlacesAndModes.modeOfTransport;
 
 
+        if (locations.length == 0) {
+            Toast.makeText(getActivity(), "You have no itinerary yet", Toast.LENGTH_SHORT).show();
+        }
+
+        else {
+
+            for (int i = 0; i < locations.length; i++) {
+                if (locations[i].equals("Zoo"))
+                    locations[i] = "Singapore Zoo";
+                else if (locations[i].equals("Botanic Gardens"))
+                    locations[i] = "Singapore Botanic Gardens";
+
+            }
+            //clear map first
+            mMap.clear();
+
+            for (int i = 1; i < locations.length; i++) {
+                PolylineOptions pathOptions = new PolylineOptions();
+                LatLng loc1 = getCoordinate(locations[i - 1]);
+                LatLng loc2 = getCoordinate(locations[i]);
+
+                if (loc1 != null) {
+                    mMap.addMarker(new MarkerOptions().position(loc1));
+                    if (mode[i - 1].equals("walk")) {
+                        pathOptions.add(loc1, loc2).width(7).color(Color.BLUE).geodesic(true);}
+                    else if (mode[i - 1].equals("taxi")) {
+                        pathOptions.add(loc1, loc2).width(7).color(Color.GREEN).geodesic(true);}
+                    else if (mode[i - 1].equals("public")) {
+                        pathOptions.add(loc1, loc2).width(7).color(Color.RED).geodesic(true);
+                    }
+                    mMap.addPolyline(pathOptions);
+                }
+            }
+
+            LatLng loc = getCoordinate(locations[0]);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 13f));
+
+            hideSoftKeyboard();
+        }
+
+    }
 
 
 }

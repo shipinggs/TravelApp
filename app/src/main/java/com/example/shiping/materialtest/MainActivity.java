@@ -15,6 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,9 +79,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.help) { /** IMPLEMENT HELP ACTIVITY **/
-            startActivity(new Intent(this, HelpActivity.class));
-            overridePendingTransition(R.anim.animation_enter_right,R.anim.animation_exit_left);
+        if (id == R.id.itinerary) { /** IMPLEMENT HELP ACTIVITY **/
+            if (ListOfSelectedPlacesAndModes.interestedLocations.length == 0)
+                Toast.makeText(this, "You have no itinerary yet", Toast.LENGTH_SHORT).show();
+            else {
+                Intent myIntent = new Intent(this, RouteFinder.class).putExtra("best route", ListOfSelectedPlacesAndModes.interestedLocations);
+                myIntent.putExtra("transport mode", ListOfSelectedPlacesAndModes.modeOfTransport);
+                myIntent.putExtra("total cost", ListOfSelectedPlacesAndModes.totalCost);
+                myIntent.putExtra("total time", ListOfSelectedPlacesAndModes.totalTime);
+                startActivity(myIntent);
+                overridePendingTransition(R.anim.animation_enter_right, R.anim.animation_exit_left);
+            }
         }
 
         if (id == R.id.weatherForecast) { /**IMPLEMENT WEATHER ACTIVITY **/
@@ -99,109 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    public void search(View view) {
-//        //get location from search bar
-//        EditText location = (EditText) findViewById(R.id.editText1);
-//        String locstring = location.getText().toString().toLowerCase(); //location in lowercase
-//        String fuzzylocation = fuzzify(locstring);
-//        if (!fuzzylocation.equals("")) {
-//            Log.i("MapsActivity.java", fuzzylocation + " in if block");
-//
-//            LatLng loc = getCoordinate(fuzzylocation);
-//            mMap.addMarker(new MarkerOptions().position(loc).title("Marker in SG").anchor(0.5f,0.5f));
-//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17f));
-//
-//        }
-//        else {
-//            //location is not a location listed in dict
-//            Log.i("MapsActivity.java", fuzzylocation+" in else block");
-//            Toast.makeText(this, "Unfound location", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        //hide soft keyboard
-//        InputMethodManager inputManager = (InputMethodManager) getSystemService
-//                (Context.INPUT_METHOD_SERVICE);
-//        inputManager.hideSoftInputFromWindow(
-//                this.getCurrentFocus().getWindowToken(), 0);
-//    }
-//
-//    private LatLng getCoordinate(String location) {
-//        Geocoder myGeo = new Geocoder(this);
-//        List<Address> matchedList= null;
-//        Address address = null;
-//        try {
-//            matchedList = myGeo.getFromLocationName(location, 1);
-//            address = matchedList.get(0);
-//        } catch (IOException e) {
-//            //geocoder cannot find the location
-//            Toast.makeText(this, "Invalid location" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//
-//        LatLng loc = new LatLng(address.getLatitude(), address.getLongitude());
-//        return loc;
-//    }
-//
-//    /**
-//     * Given a string of location, check if the string matches any of the location stored in dictionary
-//     *
-//     * @param location string of location keyed in by the user
-//     * @return the location name that matches the input, or null if there is none
-//     */
-//    private String fuzzify(String location) {
-//        ArrayList<String> compareTo = new ArrayList<String>();
-//        AssetManager am = getAssets();
-//        try {
-//            InputStream assetIn = am.open("dict");
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(assetIn));
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                compareTo.add(line);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        for (String e : compareTo) {
-//            if (compare(location, e) < 3) {
-//                Log.i("MapsActivity.java", "edit distance is less than 3");
-//                return e;
-//            }
-//        }
-//
-//        return "";
-//    }
-//
-//    private int compare(String s1, String s2) { //s1 is input, s2 is loc name in dictionary
-//        //initial conditions
-//        int ls1 = s1.length();
-//        int ls2 = s2.length();
-//        int[][] distancematrix = new int[ls1+1][ls2+1];
-//        for (int i=0; i <= ls1; i++) {
-//            distancematrix[i][0] = i;
-//        }
-//        for (int j=0; j <= ls2; j++) {
-//            distancematrix[0][j] = j;
-//        }
-//        /////////////////////////////////////////////////
-//
-//
-//        for (int i = 1; i <=ls1; i++) {
-//            for (int j = 1; j <=ls2; j++) {
-//                if (s1.charAt(i-1) == s2.charAt(j-1)) { //when the last char x and y are the same
-//                    distancematrix[i][j] = distancematrix[i-1][j-1];
-//                }
-//                else {
-//                    int insert = distancematrix[i][j-1]+1;
-//                    int delete = distancematrix[i-1][j]+1;
-//                    int replace = distancematrix[i-1][j-1]+1;
-//                    distancematrix[i][j] = Math.min(Math.min(insert, delete), replace);
-//                }
-//            }
-//        }
-//        return distancematrix[ls1][ls2];
-//    }
-
-
     class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         int icons[] = {R.drawable.ic_directions, R.drawable.ic_place, R.drawable.ic_favorite};
@@ -218,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
 
             if (position == 0)
-                fragment = new TestFragment();
+                fragment = new CalcFragment();
             else if (position == 1)
                 fragment = new MapFragment();
             else if (position == 2)
@@ -243,6 +156,115 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 3;
         }
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.slowAlgo:
+                if (checked)
+
+                    break;
+            case R.id.fastAlgo:
+                if (checked)
+
+                    break;
+        }
+    }
+
+
+    public void FindRouteActivate(View view) {
+        try {
+            ListOfSelectedPlacesAndModes.rememberBoole = 1 - ListOfSelectedPlacesAndModes.rememberBoole;
+            EditText budgetIn = (EditText) findViewById(R.id.budgetText);
+
+            double budget = Double.parseDouble(budgetIn.getText().toString());
+
+            CheckBox ion = (CheckBox) findViewById(R.id.starION);
+            CheckBox flyer = (CheckBox) findViewById(R.id.starFlyer);
+            CheckBox sentosa = (CheckBox) findViewById(R.id.starSentosa);
+            CheckBox temple = (CheckBox) findViewById(R.id.starTemple);
+            CheckBox garden = (CheckBox) findViewById(R.id.starGarden);
+            CheckBox museum = (CheckBox) findViewById(R.id.starMuseum);
+            CheckBox vivo = (CheckBox) findViewById(R.id.starVivo);
+            CheckBox zoo = (CheckBox) findViewById(R.id.starZoo);
+
+
+            ArrayList<String> placesToVisit = new ArrayList<>();
+
+            if (ion.isChecked()) {
+                placesToVisit.add("ION Orchard");
+            }
+            if (flyer.isChecked()) {
+                placesToVisit.add("Singapore Flyer");
+            }
+            if (sentosa.isChecked()) {
+                placesToVisit.add("Resorts World Sentosa");
+            }
+            if (temple.isChecked()) {
+                placesToVisit.add("Buddha Tooth Relic Temple");
+            }
+            if (museum.isChecked()) {
+                placesToVisit.add("Peranakan Museum");
+            }
+            if (garden.isChecked()) {
+                placesToVisit.add("Botanic Gardens");
+            }
+            if (vivo.isChecked()) {
+                placesToVisit.add("Vivo City");
+            }
+            if (zoo.isChecked()) {
+                placesToVisit.add("Zoo");
+            }
+
+            if (placesToVisit.size() == 0) { throw new IOException(); }
+
+            String[] placesToVisitX = new String[placesToVisit.size()];
+            placesToVisitX = placesToVisit.toArray(placesToVisitX);
+
+
+            RadioButton fastSolver = (RadioButton) findViewById(R.id.fastAlgo);
+
+            String[] result;
+            if (!fastSolver.isChecked() && placesToVisit.size() >= 7) {
+                Toast.makeText(MainActivity.this, "AINT NOBODY GOT TIEM FOR THAT", Toast.LENGTH_SHORT).show();
+            } else {
+                if (fastSolver.isChecked()) {
+                    result = GetItinerary.calcCostTime((ApproxByTSP.generateRouteTSP(placesToVisitX)), budget);
+                } else {
+                    ArrayList<String> listOfPlaces = GetItinerary.setPlaces(placesToVisitX);
+                    ArrayList<ArrayList<String>> possiblePermutations = GetItinerary.generateRoute(listOfPlaces);
+                    result = GetItinerary.calcCostTime(possiblePermutations, budget);
+                }
+
+                String[] BestRoute = GetItinerary.getOptimalRoute(result);
+                ListOfSelectedPlacesAndModes.setInterestedLocations(BestRoute);
+
+                String[] Transport = GetItinerary.getTransMode(result);
+                ListOfSelectedPlacesAndModes.setModeOfTransport(Transport);
+
+                String totalcost = GetItinerary.getCost(result);
+                ListOfSelectedPlacesAndModes.setTotalCost(totalcost);
+
+                String totaltime = GetItinerary.getTime(result);
+                ListOfSelectedPlacesAndModes.setTotalTime(totaltime);
+
+                Intent myIntent = new Intent(this, RouteFinder.class).putExtra("best route", BestRoute);
+                myIntent.putExtra("transport mode", Transport);
+                myIntent.putExtra("total cost", totalcost);
+                myIntent.putExtra("total time", totaltime);
+                startActivity(myIntent);
+            }
+        } catch (NumberFormatException ex) {
+            Toast.makeText(MainActivity.this, "Please enter your budget!", Toast.LENGTH_SHORT).show();
+        } catch (IOException ex) {
+            Toast.makeText(MainActivity.this, "Please select the places you're visiting!", Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
 }
