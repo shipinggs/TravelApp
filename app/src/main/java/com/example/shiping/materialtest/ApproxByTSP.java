@@ -5,9 +5,15 @@ import com.example.shiping.materialtest.db.MapData;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+// fast approximate solver
 public class ApproxByTSP {
 
+    /**
+     * generate a single optimal route using the nearest neighbour algorithm
+     * 
+     * @param String[] of the list of places the user would like to visit
+     * @return ArrayList<ArrayList<String>> of the tree edges of the optimal route
+     */
     public static ArrayList<ArrayList<String>> generateRouteTSP(String[] placeList) {
         HashMap<String, double[]> data = MapData.createData();
         HashMap<String, Character> codeNames = new HashMap<String, Character>();
