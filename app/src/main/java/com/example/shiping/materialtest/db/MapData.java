@@ -22,7 +22,9 @@ public class MapData {
          * G --> Singapore Botanic Gardens/ Botanic Gardens
          * H --> Peranakan Museum
          * I --> ION Orchard
-         * e.g. from A to B = {publicCost, publicTime, taxiCost, taxiTime, walkCost, walkTime} **/
+         * e.g. from A to B = {publicCost, publicTime, taxiCost, taxiTime, walkCost, walkTime}
+         *
+         * These travel times and costs are referenced from gothere.sg and Google Maps Directions tool. **/
 
         double[] listAB = {0.83, 17, 3.22, 3, 0, 14};
         double[] listAC = {1.18, 26, 6.96, 14, 0, 69};
