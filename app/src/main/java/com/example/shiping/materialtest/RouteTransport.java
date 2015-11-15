@@ -1,6 +1,9 @@
 package com.example.shiping.materialtest;
 
-
+/**
+ * A class that takes in the destination string and mode of transport, and combine them together to
+ * get an instruction for the travelling.
+ */
 
 public class RouteTransport {
     public  String route;
@@ -11,7 +14,12 @@ public class RouteTransport {
         this.transport = transport;
     }
 
-
+    /**
+     * Generate the text instruction to be displayed in the Itinerary
+     * @param route
+     * @param transport
+     * @return
+     */
 
     public String inputText(String route, String transport) {
         String out = "";

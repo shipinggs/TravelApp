@@ -10,12 +10,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Creates a class that serves as an Array adapter in order to generate a ListView with the solution
+ * generated from function 1. It adds or assign content to the route layout of, which consist of
+ * a TextView and an ImageView
+ */
 public class RouteAdapter extends ArrayAdapter<RouteTransport> {
 
     public RouteAdapter(Context context, ArrayList<RouteTransport> users) {
         super(context, 0, users);
     }
 
+    /**
+     * Populate the ListView by showing the transportation-destination text and transportation icons .
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

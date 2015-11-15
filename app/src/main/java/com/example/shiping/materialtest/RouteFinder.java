@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * The activity displays the itinerary that is generated from the respective algorithm selected by the user.
+ * It shows the total time, total cost of the travelling, and which mode of transport to take to which destination
+ * in which order,
+ */
+
 public class RouteFinder extends AppCompatActivity {
 
     @Override
@@ -18,31 +24,32 @@ public class RouteFinder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_finder);
 
+            // get the solution data from MainActivity
         String[] s1 = getIntent().getStringArrayExtra("best route");
         String[] s2 = getIntent().getStringArrayExtra("transport mode");
         String s3 = getIntent().getStringExtra("total cost");
         String s4 = getIntent().getStringExtra("total time");
-
-//        List<String> route = Arrays.asList(s1);
-//        List<String> transport = Arrays.asList(s2);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("Itinerary");
         setSupportActionBar(toolbar);
 
-
+            // create an instance of the route adapter
         ArrayList<RouteTransport> arrayofroutes = new ArrayList<RouteTransport>();
         RouteAdapter adapter = new RouteAdapter(this, arrayofroutes);
 
+            // create the ListView with adapter set to the route adapter
         ListView listview = (ListView) findViewById(R.id.list_view);
         listview.setAdapter(adapter);
 
+            // add string content of the TextView to the adapter
         for (int i = 0; i < s2.length; i++) {
-            RouteTransport lol = new RouteTransport(s1[i+1],s2[i]);
-            adapter.add(lol);
+            RouteTransport rt = new RouteTransport(s1[i+1],s2[i]);
+            adapter.add(rt);
         }
 
+            // set the content of the TextView on top to be total cost and total time taken
         TextView cost = (TextView) findViewById(R.id.cost);
         TextView time = (TextView) findViewById(R.id.time);
 
